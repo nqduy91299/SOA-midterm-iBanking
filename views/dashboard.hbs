@@ -1,0 +1,472 @@
+<style>
+
+</style>
+<div class="row">
+    <div class="col-12 my-3 border-bottom">
+        <h2>Dashboard</h2>
+    </div>
+
+    <div class="col-6 my-2">
+        <div class="row">
+            <div class="col-12  mt-4">
+                <h4>Thông tin cá nhân</h4>
+            </div>
+            <div class="col-3 my-2 font-weight-bold">Tên:</div>
+            <div class="col-9 my-2" id="name"></div>
+            <div class="col-3 my-2 font-weight-bold">Username:</div>
+            <div class="col-9 my-2" id="username"></div>
+            <div class="col-3 my-2 font-weight-bold">Email:</div>
+            <div class="col-9 my-2" id="email"></div>
+            <div class="col-3 my-2 font-weight-bold">Điện thoại:</div>
+            <div class="col-9 my-2" id="phone"></div>
+            <div class="col-3 my-2 font-weight-bold">Số dư:</div>
+            <div class="col-9 my-2" id="balance"></div>
+        </div>
+    </div>
+    <div class="col-6 my-2">
+        <div class="row">
+            <div class="col-12 mt-4">
+                <h4>Học phí chưa thanh toán</h4>
+            </div>
+            <div class="col-12 ">
+                <ul id="unpaid-fee-list" class="my-2">
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-4">
+                <h4>Học phí đã thanh toán</h4>
+            </div>
+
+            <div class="col-12 ">
+                <ul id="paid-fee-list" class="my-2">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 my-5 border-bottom border-top">
+        <h2 class="mt-3">Thao tác khác</h2>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-success" id="btn-paid-username" data-toggle="modal"
+            data-target="#paidFeeUsernameModal">Tìm học phí theo username
+        </button>
+        <button class="btn btn-danger">Xóa</button>
+    </div>
+    <div class="col-12">
+        <div class="row m-0 p-0" id="info-other-username">
+            <div class="col-6 my-2">
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <h4>Thông tin cá nhân người nhận</h4>
+                    </div>
+                    <div class="col-3 my-2 font-weight-bold">Tên:</div>
+                    <div class="col-9 my-2" id="name-username"></div>
+                </div>
+            </div>
+            <div class="col-6 my-2">
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <h4>Học phí chưa thanh toán</h4>
+                    </div>
+                    <div class="col-12 ">
+                        <ul id="unpaid-fee-list-username" class="my-2">
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <h4>Học phí đã thanh toán</h4>
+                    </div>
+
+                    <div class="col-12 ">
+                        <ul id="paid-fee-list-username" class="my-2">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="paidFeeUsernameModal" tabindex="-1" role="dialog"
+    aria-labelledby="paidFeeModalUsernameLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paidFeeModalUsernameLabel">Tìm học phí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 p-2">
+                    <span class="my-2">Nhập username bạn muốn tìm học phí</span>
+                </div>
+                <div class="col-12 p-2">
+                    <input type="text" name="username-fee" class="w-100">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-confirm-paid-username" type="button" class="btn btn-primary">Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="paidFeeModal" tabindex="-1" role="dialog" aria-labelledby="paidFeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paidFeeModalLabel">Xác nhận thanh toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn xác nhận thanh toán?
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-confirm-paid" type="button" class="btn btn-primary">Chấp nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="otpModalLabel">Xác nhận OTP</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Nhập mã OTP:
+                <input type="text" name="otp">
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-confirm-otp" type="button" class="btn btn-primary">Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup" class="alert alert-success w-25 fixed-bottom ml-3" role="alert">
+</div>
+<script>
+    $('#popup').hide();
+    $('#info-other-username').hide()
+    const logged = getCookie('token-SOA');
+
+    if (!logged) {
+        location.pathname = '/error';
+    }
+    getUser();
+
+    function getUser() {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + logged
+            },
+        }
+
+        fetch('http://localhost:8080/dashboard', options).then(res => res.json())
+            .then(result => {
+                if (result.code == 2) {
+                    const {
+                        username,
+                        name,
+                        email,
+                        phone,
+                        balance,
+                        otp,
+                        expires,
+                        transcurr,
+                    } = result.msg;
+
+                    getMyFee(username);
+
+                    $('#username').html(username);
+                    $('#name').html(name);
+                    $('#email').html(email);
+                    $('#phone').html(phone);
+                    $('#balance').html(balance);
+                } else if (result.code == 4) {
+                    showPopup(result.msg, false)
+                }
+            })
+            .catch(e => console.error(e))
+    }
+
+    function getFee(username) {
+
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer ' + logged,
+                'username': username
+            },
+        }
+        return fetch('http://localhost:8080/dashboard/fee', options).then(res => res.json())
+    }
+
+    function getMyFee(username) {
+        $('#paid-fee-list').empty();
+        $('#unpaid-fee-list').empty();
+
+        getFee(username)
+            .then(result => {
+                if (result.code === 2) {
+                    const unpaid = result.msg.filter((fee) => {
+                        if (fee?.paid !== fee.fee) {
+                            return fee;
+                        }
+                    });
+                    const paid = result.msg.filter((fee) => {
+                        if (fee?.paid === fee.fee) {
+                            return fee;
+                        }
+                    });
+
+                    if (unpaid.length !== 0) {
+                        for (let element of unpaid) {
+                            createListUnpaidFees(element, 'unpaid-fee-list');
+                        }
+                    } else {
+                        createEmptyMsgElement('unpaid-fee-list')
+                    }
+
+                    if (paid.length !== 0) {
+                        for (let element of paid) {
+                            createListPaidFees(element, 'paid-fee-list')
+                        }
+                    } else {
+                        createEmptyMsgElement('paid-fee-list')
+                    }
+
+                    paidBtnClick();
+                } else if (result.code == 4) {
+                    alert(result.msg);
+                }
+
+            })
+            .catch(e => console.error(e))
+    }
+
+    function paidBtnClick() {
+        $('.btn-paid').on('click', (e) => {
+            const { id, username } = e.target.dataset;
+            if (e.target.classList.contains('otp-pending')) {
+                $('#btn-modal-confirm-otp').attr('data-id', id);
+                $('#btn-modal-confirm-otp').attr('data-username', username);
+                $('#otpModal').modal('show');
+            } else {
+                $('#paidFeeModal').modal('show')
+                $('#btn-modal-confirm-paid').attr('data-id', id)
+                $('#btn-modal-confirm-paid').attr('data-username', username)
+            }
+
+        })
+    }
+
+    $('#btn-modal-confirm-paid').click((e) => {
+        $('.btn-paid').removeClass('otp-pending');
+        $('input[name="otp"]').val('')
+        $('#btn-modal-confirm-paid').attr('disabled', true);
+
+        const { id, username } = e.target.dataset;
+        const body = { "id": id };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + logged,
+                'username': username,
+            },
+            body: JSON.stringify(body)
+        }
+
+        fetch('http://localhost:8080/dashboard/fee', options).then(res => res.json())
+            .then(result => {
+                $('#btn-modal-confirm-paid').attr('disabled', false);
+                $('#paidFeeModal').modal('hide');
+
+                if (result.code == 2) {
+                    $(`#${id}`).addClass('otp-pending');
+                    setTimeout(() => {
+                        $(`#${id}`).removeClass('otp-pending');
+                    }, 60000)
+                    $('#otpModal').modal('show');
+                    $('#btn-modal-confirm-otp').attr('data-id', id);
+                    $('#btn-modal-confirm-otp').attr('data-username', username);
+
+                    showPopup(result.msg, true);
+                } else if (result.code == 4 || result.code == 3) {
+                    showPopup(result.msg, false);
+                }
+            })
+            .catch(e => console.error(e))
+    });
+
+    $('#btn-modal-confirm-otp').click((e) => {
+
+        const { id, username } = e.target.dataset;
+        const otp = $('input[name="otp"]').val();
+        const body = { "id": id, "otp": otp };
+        const regex = /^[0-9]{6}$/gm;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + logged,
+                'username': username,
+            },
+            body: JSON.stringify(body)
+        }
+
+        if (regex.test(otp)) {
+            fetch('http://localhost:8080/otp', options).then(res => res.json())
+                .then(result => {
+                    if (result.code == 2) {
+                        $('#otpModal').modal('hide');
+                        $('input[name="otp"]').val('');
+
+                        getUser()
+                        if ($('input[name="username-fee"]').val() !== '') {
+                            getFeeSomeone($('input[name="username-fee"]').val())
+                        }
+                        showPopup(result.msg, true);
+                    } else if (result.code == 4) {
+                        showPopup(result.msg, false)
+                        $('#otpModal').modal('hide');
+                    }
+                })
+                .catch(e => console.error(e))
+        } else {
+            alert("Mã OTP không đúng định dạng!");
+        }
+    })
+
+    function getFeeSomeone(username) {
+        $('#paid-fee-list-username').empty();
+        $('#unpaid-fee-list-username').empty();
+        getFee(username)
+            .then(result => {
+                if (result.code == 2) {
+                    $('#info-other-username').show()
+                    $('#paidFeeUsernameModal').modal('hide')
+                    showPopup('Lấy dữ liệu thành công', true);
+
+                    if (result.msg.length !== 0) {
+                        $('#name-username').html(result.msg[0].name);
+
+                        const unpaid = result.msg.filter((fee) => {
+                            if (fee?.paid !== fee.fee) {
+                                return fee;
+                            }
+                        });
+                        const paid = result.msg.filter((fee) => {
+                            if (fee?.paid === fee.fee) {
+                                return fee;
+                            }
+                        });
+
+                        if (unpaid.length !== 0) {
+                            for (let element of unpaid) {
+                                createListUnpaidFees(element, 'unpaid-fee-list-username');
+                            }
+                        } else {
+                            createEmptyMsgElement('unpaid-fee-list-username')
+                        }
+
+                        if (paid.length !== 0) {
+                            for (let element of paid) {
+                                createListPaidFees(element, 'paid-fee-list-username')
+                            }
+                        } else {
+                            createEmptyMsgElement('paid-fee-list-username')
+                        }
+                        paidBtnClick()
+                    }
+                } else {
+                    $('#paidFeeUsernameModal').modal('hide')
+                    showPopup(result.msg, false);
+                }
+                console.log(result)
+            })
+            .catch();
+    }
+
+    $('#btn-modal-confirm-paid-username').click((e) => {
+        const username = $('input[name="username-fee"]').val();
+        getFeeSomeone(username);
+    })
+
+    function showPopup(msg, flag) {
+        if (!flag) {
+            $('#popup').removeClass('alert-success');
+            $('#popup').addClass('alert-danger');
+        } else {
+            $('#popup').removeClass('alert-danger');
+            $('#popup').addClass('alert-success');
+        }
+        $('#popup').html(msg);
+        $('#popup').show();
+        setTimeout(() => {
+            $('#popup').hide(1000);
+        }, 3000);
+    }
+
+    function getCookie(cname) {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function createListPaidFees(element, nameElement) {
+        $(`#no-msg-${nameElement}`).remove()
+        $(`#${nameElement}`)
+            .append($(`<li class="text-success">
+                <span class="font-weight-bold">${element.feename}: </span>
+                ${element.fee}</li>`
+            ));
+    }
+
+    function createListUnpaidFees(element, nameElement) {
+        $(`#no-msg-${nameElement}`).remove()
+        $(`#${nameElement}`)
+            .append($(`<li class="my-2">
+                <span class="font-weight-bold">${element.feename}: </span>
+                ${element.fee} 
+                <button 
+                    class="btn btn-success btn-paid ml-2"
+                    id=${element._id}
+                    data-id=${element._id} 
+                    data-username=${element.username}
+                    data-toggle="modal"
+                    >Thanh toán
+                </button>
+            </li>`
+            ));
+    }
+
+    function createEmptyMsgElement(id) {
+        $('#' + id).after(`<span id="no-msg-${id}" class="font-italic">Chưa có học phí</span>`);
+    }
+</script>
