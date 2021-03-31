@@ -1,4 +1,4 @@
-# PROJECT: IBANKING api
+# Project: iBanking api
 
 ### Requirement
 

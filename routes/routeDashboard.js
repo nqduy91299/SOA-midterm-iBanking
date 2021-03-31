@@ -15,12 +15,7 @@ router.get("/", async function (req, res){
 })
 
 router.get("/fee", async function(req, res){
-    let infoFeeUser
-    if(req.headers.username){
-        infoFeeUser = req.headers.username
-    }else{
-        infoFeeUser = req.username
-    }
+    let infoFeeUser = req.headers?.username
     
     let resultAccount = await User.find({username: infoFeeUser});
     if(resultAccount.length == 0){
