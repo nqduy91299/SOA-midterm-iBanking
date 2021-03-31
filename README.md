@@ -1,15 +1,22 @@
-# PROJECT: IBANKING
+# PROJECT: IBANKING api
 
-## **BEFORE USE**
+### Requirement
 
-Create Database:
+- The latest Node.js possible
+- Database MongoDB
 
-- name database: iBanking
-- collections:
+### Getting Started
+
+First, we need a database. Use mongodb:
+
+```
+Database's name: iBanking
+Collections:
   - Fees
   - Users
+```
 
-Install all modules:
+And install all dependencies:
 
 ```
 npm install
@@ -24,8 +31,6 @@ cd utils
 ```
 node config.js
 ```
-
-## **USE**
 
 Run project:
 
