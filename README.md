@@ -30,7 +30,11 @@ node config.js
 Run project:
 
 ```
-**npm start**
+cd ..
+```
+
+```
+npm start
 ```
 
 Available at: http://localhost:8080

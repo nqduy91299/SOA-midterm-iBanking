@@ -25,7 +25,11 @@ router.post("/", async function(req, res){
                     User.findOneAndUpdate({username: req.username}, {balance: (result.balance - tuition.fee)})
                     .then(success => {
                         if (success){
-                            return res.json({code: 2, msg: "Thanh toán học phí thành công"})
+                            let authorPaid = true;
+                            if(tuition.username != req.username){
+                                authorPaid = false
+                            }
+                            return res.json({code: 2, msg: "Thanh toán học phí thành công", isAuthorPaid: authorPaid})
                         }
                     })
                 }

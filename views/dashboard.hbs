@@ -51,7 +51,7 @@
         <button class="btn btn-success" id="btn-paid-username" data-toggle="modal"
             data-target="#paidFeeUsernameModal">Tìm học phí theo username
         </button>
-        <button class="btn btn-danger">Xóa</button>
+        <button class="btn btn-danger" id="btn-delete-someone-info">Xóa</button>
     </div>
     <div class="col-12">
         <div class="row m-0 p-0" id="info-other-username">
@@ -69,6 +69,7 @@
                     <div class="col-12 mt-4">
                         <h4>Học phí chưa thanh toán</h4>
                     </div>
+
                     <div class="col-12 ">
                         <ul id="unpaid-fee-list-username" class="my-2">
                         </ul>
@@ -158,6 +159,7 @@
 <script>
     $('#popup').hide();
     $('#info-other-username').hide()
+    $('#btn-delete-someone-info').hide();
     const logged = getCookie('token-SOA');
 
     if (!logged) {
@@ -217,7 +219,9 @@
 
     function getMyFee(username) {
         $('#paid-fee-list').empty();
+        $('#no-msg-paid-fee-list').empty();
         $('#unpaid-fee-list').empty();
+        $('#no-msg-unpaid-fee-list').empty();
 
         getFee(username)
             .then(result => {
@@ -337,7 +341,7 @@
                         $('input[name="otp"]').val('');
 
                         getUser()
-                        if ($('input[name="username-fee"]').val() !== '') {
+                        if (!result.isAuthorPaid) {
                             getFeeSomeone($('input[name="username-fee"]').val())
                         }
                         showPopup(result.msg, true);
@@ -353,11 +357,14 @@
     })
 
     function getFeeSomeone(username) {
-        $('#paid-fee-list-username').empty();
         $('#unpaid-fee-list-username').empty();
+        $('#no-msg-unpaid-fee-list-username').empty();
+        $('#paid-fee-list-username').empty();
+        $('#no-msg-paid-fee-list-username').empty();
         getFee(username)
             .then(result => {
                 if (result.code == 2) {
+                    $('#btn-delete-someone-info').show();
                     $('#info-other-username').show()
                     $('#paidFeeUsernameModal').modal('hide')
                     showPopup('Lấy dữ liệu thành công', true);
@@ -381,6 +388,7 @@
                                 createListUnpaidFees(element, 'unpaid-fee-list-username');
                             }
                         } else {
+
                             createEmptyMsgElement('unpaid-fee-list-username')
                         }
 
@@ -406,6 +414,12 @@
         const username = $('input[name="username-fee"]').val();
         getFeeSomeone(username);
     })
+
+    $('#btn-delete-someone-info').click(() => {
+        $('#info-other-username').hide()
+        $('#btn-delete-someone-info').hide();
+        $('input[name="username-fee"]').val('');
+    });
 
     function showPopup(msg, flag) {
         if (!flag) {
@@ -467,6 +481,6 @@
     }
 
     function createEmptyMsgElement(id) {
-        $('#' + id).after(`<span id="no-msg-${id}" class="font-italic">Chưa có học phí</span>`);
+        $(`#${id}`).after(`<span id="no-msg-${id}" class="font-italic">Chưa có học phí</span>`);
     }
 </script>
