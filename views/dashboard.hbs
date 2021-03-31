@@ -402,6 +402,8 @@
                         paidBtnClick()
                     }
                 } else {
+                    $('#btn-delete-someone-info').hide();
+                    $('#info-other-username').hide()
                     $('#paidFeeUsernameModal').modal('hide')
                     showPopup(result.msg, false);
                 }

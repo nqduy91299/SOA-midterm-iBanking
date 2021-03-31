@@ -30,7 +30,7 @@ const user2 = new User({
 const user3 = new User({
     username: 'ducthang12', 
     password: bcrypt.hashSync('123123123', 10),
-    name: 'Ly Duc Thang', 
+    name: 'Lý Đức Thắng', 
     email: 'ducthang12@gmail.com', 
     phone: '0126591232',
     balance: 100000000  });
